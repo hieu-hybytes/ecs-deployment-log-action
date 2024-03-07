@@ -1,0 +1,21 @@
+name: 'ECS Deployment Logger'
+description: 'fetches container logs for a failed/pending ECS deployment'
+author: 'digitalkaoz'
+branding:
+  icon: "download-cloud"
+  color: "orange"
+
+inputs:
+  cluster:
+    description: 'the ECS cluster'
+    required: true
+  service:
+    description: 'the ECS service'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - id: fetch-logs
+      run: ${GITHUB_ACTION_PATH}/ecs-deployment-logger.sh ${{ inputs.cluster }} ${{ inputs.service }}
+      shell: bash
