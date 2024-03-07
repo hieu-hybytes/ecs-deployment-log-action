@@ -2,6 +2,7 @@
 
 CLUSTER="${1}"
 SERVICE="${2}"
+STATE="${3:-COMPLETED}"
 
 show_cluster_events() {
   echo -e "show latest cluster events\n"
@@ -9,7 +10,7 @@ show_cluster_events() {
 }
 
 get_deployments() {
-  aws ecs describe-services --cluster "${CLUSTER}" --services "${SERVICE}" | jq '[.services[0].deployments[] | select(.rolloutState != "COMPLETED")]'
+  aws ecs describe-services --cluster "${CLUSTER}" --services "${SERVICE}" | jq "[.services[0].deployments[] | select(.rolloutState != \"${STATE}\")]"
 }
 
 get_deployment_ids() {

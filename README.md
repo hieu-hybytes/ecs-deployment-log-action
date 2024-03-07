@@ -52,3 +52,15 @@ jobs:
           cluster: ${{ inputs.cluster }}
           service: ${{ inputs.service }}
 ```
+
+## Configuring to always show logs
+
+```yaml
+      - name: Show Deployment Logs
+        if: failure() || cancelled()
+        uses: digitalkaoz/ecs-deployment-log-action@main
+        with:
+          cluster: ${{ inputs.cluster }}
+          service: ${{ inputs.service }}
+          state: NONE # available values are COMPLETED | FAILED | IN_PROGRESS | NONE
+```

@@ -12,10 +12,19 @@ inputs:
   service:
     description: 'the ECS service'
     required: true
+  state:
+    description: 'the ECS deployment state, on'
+    choice:
+     - "COMPLETED"
+     - "FAILED"
+     - "IN_PROGRESS"
+     - "NONE"
+    default: 'COMPLETED'
+    required: false
 
 runs:
   using: "composite"
   steps:
     - id: fetch-logs
-      run: ${GITHUB_ACTION_PATH}/ecs-deployment-logger.sh ${{ inputs.cluster }} ${{ inputs.service }}
+      run: ${GITHUB_ACTION_PATH}/ecs-deployment-logger.sh ${{ inputs.cluster }} ${{ inputs.service }} ${{ inputs.state }}
       shell: bash
