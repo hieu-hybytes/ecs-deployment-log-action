@@ -6,6 +6,8 @@ Fetches ECS Deployment Logs and Container Logs (started the `failed` or `pending
 
 ## Usage
 
+> the following is just an ECS deployment
+
 ```yaml
 name: Example workflow for ECS Deployment
 on: [push]
@@ -44,21 +46,25 @@ jobs:
           cluster: ${{ inputs.cluster }}
           wait-for-service-stability: true
       
-      # fetch & show the deployment logs in case of failure or cancel
+      # see below for the 2 variants on how to use this action
+```
+
+### Action-Configuration to only show logs in case of an error or cancellation
+
+```yaml
       - name: Show Deployment Logs
         if: failure() || cancelled()
-        uses: digitalkaoz/ecs-deployment-log-action@main
+        uses: digitalkaoz/ecs-deployment-log-action@v2.1
         with:
           cluster: ${{ inputs.cluster }}
           service: ${{ inputs.service }}
 ```
 
-## Configuring to always show logs
+### Action-Configuration to always show logs
 
 ```yaml
       - name: Show Deployment Logs
-        if: failure() || cancelled()
-        uses: digitalkaoz/ecs-deployment-log-action@main
+        uses: digitalkaoz/ecs-deployment-log-action@v2.1
         with:
           cluster: ${{ inputs.cluster }}
           service: ${{ inputs.service }}
