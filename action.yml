@@ -26,5 +26,7 @@ runs:
   using: "composite"
   steps:
     - id: fetch-logs
-      run: ${GITHUB_ACTION_PATH}/ecs-deployment-logger.sh ${{ inputs.cluster }} ${{ inputs.service }} ${{ inputs.state }}
+      run: |
+        set -x
+        ${GITHUB_ACTION_PATH}/ecs-deployment-logger.sh ${{ inputs.cluster }} ${{ inputs.service }} ${{ inputs.state }}
       shell: bash
